@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from './Post';
-import axios from 'axios';
 import { Container, Typography, CircularProgress, Alert, Stack, Box } from '@mui/material';
+import { apiClient } from '../context/AuthContext';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -13,8 +13,8 @@ const PostList = () => {
             try {
                 // 이전 대화에서 백엔드를 수정하여 camelCase로 응답을 보낸다고 가정합니다.
                 // 만약 원래대로 Posts(PascalCase)를 쓴다면 response.data.Posts로 수정해주세요.
-                const response = await axios.get('http://localhost:8080/main');
-                setPosts(response.data.Posts); 
+                const response = await apiClient.get('/main');
+                setPosts(response.data.Posts);
             } catch (err) {
                 setError('게시글을 불러오는 데 실패했습니다.');
                 console.error(err);

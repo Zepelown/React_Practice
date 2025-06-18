@@ -1,52 +1,117 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅 임포트
+import { useNavigate } from 'react-router-dom';
+
+// Material-UI imports
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 function RegisterForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // navigate 함수 생성
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("test")
-        const data = { name, email, password }; // ES6 축약 문법 사용
-
+        const data = { name, email, password };
         try {
             const response = await axios.post('http://localhost:8080/users/register', data);
-
-            // 성공 상태 코드가 201 (Created) 또는 200 (OK)일 경우 처리
-            if (response.status === 201 || response.status === 200) { 
+            if (response.status === 201 || response.status === 200) {
                 alert('회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.');
-                navigate('/login'); // React Router를 이용한 페이지 이동
+                navigate('/login');
             } else {
-                // 예상치 못한 성공 코드가 온 경우
                 alert(`회원가입은 되었지만, 예상치 못한 응답(Status: ${response.status})을 받았습니다.`);
             }
         } catch (error) {
             console.error('회원가입 요청 오류:', error);
-            // 서버가 구체적인 에러 메시지를 보냈을 경우 이를 활용
             const errorMessage = error.response?.data?.message || '회원가입에 실패했습니다. 서버 로그를 확인해주세요.';
             alert(errorMessage);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" required />
-            <br />
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일" required />
-            <br />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" required />
-            <br />
-            <button 
-                type="submit"
-                onClick={()=> console.log("버튼 클릭 됨!")}
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
             >
-                회원가입
-            </button>
-        </form>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    회원가입
+                </Typography>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                autoComplete="given-name"
+                                name="name"
+                                required
+                                fullWidth
+                                id="name"
+                                label="이름"
+                                autoFocus
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="email"
+                                label="이메일 주소"
+                                name="email"
+                                autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                name="password"
+                                label="비밀번호"
+                                type="password"
+                                id="password"
+                                autoComplete="new-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        회원가입
+                    </Button>
+                    <Grid container justifyContent="flex-end">
+                        <Grid item>
+                            <Link href="/login" variant="body2">
+                                이미 계정이 있으신가요? 로그인
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Box>
+        </Container>
     );
 }
 

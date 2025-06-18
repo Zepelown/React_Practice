@@ -17,9 +17,6 @@ function LoginPage() {
         <div>
             <h1>로그인</h1>
             <LoginForm />
-            <p>
-                계정이 없으신가요? <Link to="/register">회원가입 하러가기</Link>
-            </p>
         </div>
     );
 }

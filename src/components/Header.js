@@ -12,6 +12,10 @@ const Header = () => {
     navigate('/login'); // 로그아웃 후 로그인 페이지로 이동[1][3]
   };
 
+  const handleWritePost = () => {
+    navigate('/post');
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -26,6 +30,9 @@ const Header = () => {
             <Typography sx={{ mr: 2 }}>
               환영합니다, {user?.username}님!
             </Typography>
+            <Button color="inherit" onClick={handleWritePost}>
+              글쓰기
+            </Button>
             <Button color="inherit" onClick={handleLogout}>
               로그아웃
             </Button>

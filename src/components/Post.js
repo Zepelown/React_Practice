@@ -12,6 +12,7 @@ const Post = ({ post }) => {
   };
 
   return (
+    
     <CardActionArea component="div" onClick={handleCardClick}>
       <Card sx={{ marginBottom: 2 }}>
         <CardContent>

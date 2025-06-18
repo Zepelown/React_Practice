@@ -6,6 +6,7 @@ import PostDetailPage from './pages/PostDetailPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import RootLayout from './pages/RootLayout'; // RootLayout을 import 합니다.
+import WritePostForm from './components/WriteForm';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             path: 'post/:postId',
             element: <PostDetailPage />,
           },
+          {
+            path: 'post',
+            element: <WritePostForm/>
+          }
         ],
       },
       {
